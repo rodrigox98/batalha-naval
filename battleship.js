@@ -1,5 +1,6 @@
 //Objeto que mantém Mantém a exibição atualizada
-var view = { //Métodos
+var view = {
+
     displayMessage: function(msg){ 
         var messageArea = document.getElementById("messageArea")
         messageArea.innerHTML = msg;
@@ -21,10 +22,12 @@ var view = { //Métodos
     vamos definir os itens do arrays como string vazias inicialmente e mudar cada item para hit quando o navio for atingido no local correspondente 
 } */
 
-    
+
 
 //Objeto Model
+//Objeto responsável por manter a lógica do jogo. Verificando navios afundados, processando as tentativas e contabilizar o estado atual do jogo. 
 var model = {
+
     boardSize:  7,  //tamanho da grade
     numShips:   3,  //número de navios
     shipLength: 3,  //o número de locais em cada navio 
@@ -47,10 +50,12 @@ var model = {
         for( var i =0; i <this.numShips; i++){ //Passa por cada método do navio
             var ship = this.ships[i]    //variável q recebe o navio
             var index = ship.locations.indexOf(guess) //Retorna o index do 'locations' na variável 'ship' de nosso palpite.
-            if(index >= 0){ //O método indexOf retorna zero se não achar o nosso palpite, então não entramos nessa condicional.
+
+            if(index >= 0){ //O método indexOf retorna -1 se não achar o nosso palpite, então não entramos nessa condicional.
                 ship.hits[index] = "hit" //marca hit no array hits com o index da localização, caso o palpite esteja correto
                 view.displayHit(guess)
                 view.displayMessage("HIT")
+
                 if(this.isSunk(ship)){ //caso nosso método isSunk retorne true. Propriedade do número de navios afundado recebe +1
                     view.displayMessage("You sank a battleship!")
                     this.shipsSunk++
@@ -58,17 +63,33 @@ var model = {
                 return true
             }
         }
+        view.displayMiss(guess)
+        view.displayMessage("You missed.")
         return false
     },
     //Método que verifica se o navio esta afundado
     isSunk: function(ship){ //Recebe um navio como argumento
-        for( var i = 0; i < this.ship.length ; i++){ 
+        for( var i = 0; i < this.shipLength ; i++){     
+
             if(ship.hits[i] =! "hit"){ //Passa pelo array hit desse navio, verificando em cada índice se o valor é diferente de hit, se for retorna false. e o navio ainda não afundou.
                 return false
             }
         }
         return true
     }
-    
+}
 
+model.fire("06"); model.fire("16"); model.fire("26")
+
+
+
+//Objeto Controller 
+//Este objeto é responsável por pegar o palpite, processar o palpite e entregar para o model. 
+//Se apoia no model para manter o estado no objeto view para exibir o jogo.
+
+var controller = {
+    guesses: 0,
+    processGuess: function(guess){
+        
+    }
 }
