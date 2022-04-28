@@ -79,9 +79,6 @@ var model = {
     }
 }
 
-model.fire("06"); model.fire("16"); model.fire("26")
-
-
 
 //Objeto Controller 
 //Este objeto é responsável por pegar o palpite, processar o palpite e entregar para o model. 
@@ -91,5 +88,27 @@ var controller = {
     guesses: 0,
     processGuess: function(guess){
         
-    }
+    },
+    
 }
+//Função que verifica o palpite
+function parseGuess(guess){
+    var alphabet = ["A", "B", "C", "D", "E", "F", "G"]
+    if (guess === null || guess.length !== 2){
+        alert("Please enter a letter and a number on the board")
+    }else{
+        var firstChar = guess.charAt(0) //Pega o primeiro palpite do guess
+        var row = alphabet.indexOf(firstChar) //Retorna no alfabeto um número entre 0 e 6 referente a letra correspondida no guess
+
+        var column = guess.charAt(1) //Pega o segundo caractere do guess
+        if(isNaN(row) || isNaN(column)){
+            alert("That isn't on the board")
+        }else if(row < 0 || row >= model.boardSize || column < 0 || column >= model.boardSize){
+            alert("That's off the board")        
+        }else{
+            return row + column //Se nada falhar retorna a string convertida
+        }
+    }
+    return null
+}
+
