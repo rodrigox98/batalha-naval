@@ -122,3 +122,18 @@ function parseGuess(guess){
     return null
 }
 
+function init(){
+    var fireButton = document.getElementById("fireButton")
+    fireButton.onclick = handlerFireButton
+}
+
+
+function handlerFireButton(){
+    guessInput = document.getElementById("guessInput")
+    var guess = guessInput.value  //recebe o palpite no campo de input
+    controller.processGuess(guess) // passa o palpite no campo de input pro controller 
+
+    guessInput.value = ""
+}
+
+window.onload = init  // Só roda init quando o código estiver totalmente carregado
