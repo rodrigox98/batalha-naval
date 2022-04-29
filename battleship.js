@@ -87,10 +87,20 @@ var model = {
 var controller = {
     guesses: 0,
     processGuess: function(guess){
-        
+        var location = parseGuess(guess);
+        if(location){ //Desde que não recebamos null, sabemos que temos um objeto location válido. null é um valor falsey
+            this.guesses++;
+            var hit = model.fire(location);
+            if(hit && model.shipsSunk === model.numShips){
+                view.displayMessage("You sank all the battleships, in " + this.guesses + "guesses")
+                
+            }
+        }
     },
     
 }
+
+
 //Função que verifica o palpite
 function parseGuess(guess){
     var alphabet = ["A", "B", "C", "D", "E", "F", "G"]
