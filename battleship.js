@@ -123,8 +123,20 @@ function parseGuess(guess){
 }
 
 function init(){
+    //para botão fire
     var fireButton = document.getElementById("fireButton")
     fireButton.onclick = handlerFireButton
+    //para o botão enter
+    var guessInput = document.getElementById("guessInput")
+    guessInput.onkeydown = handleKeyPress
+}
+//função que ativa o enter
+function handleKeyPress(e){
+    var fireButton = document.getElementById("fireButton") //recebe o botao fire
+    if(e.keyCode === 13){  //passa o botão fire quando é apertado enter
+    fireButton.click()
+    return false  //retorna false para que o formulário não faça nada mais ( tentar enviar a si mesmo, por exemplo)
+    }
 }
 
 
