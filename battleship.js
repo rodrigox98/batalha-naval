@@ -44,7 +44,40 @@ var model = {
         locations: ["10", "11", "12"], // i = 2
         hits: ["", "", ""] } //Navio 3 
     ], 
+    generateShipLocations: function(){
+        var locations;
+        for (var i = 0; i < this.numShips; i++){
+            do{
+                locations = this.generateShip()
+            }while(this.collision(locations))
+            this.ships[i].locations = locations
+        }
+    },
+    generateShip: function(){
+        var direction = Math.floo(Math.random() * 2) //assim se cria um seguimento binário
+        var row, col
+        if(direction === 1){
+            //Gere a posição inicial para um navio horizontal
+            row = Math.floor(Math.random() * this.boardSize)
+            col = Math.floor(Math.random() * (this.boardSize  - this.shipLength))
+        }else{
+            //Gere a posição inicial para um navio vertical
+            row = Math.floor(Math.random() * (this.boardSize - this.shipLength))
+            col = Math.floor(Math.random() * this.boardSize)
+        }
 
+        var newShipLocations = []     //Para as posições, um array vazio, e adicionar as posições uma por uma
+        for(var i= 0; i< this.shipLength; i++){
+            if(direction === 1){
+            //adiciona a posição ao array para umm novo navio horizontal
+            newShipLocations.push(row + "" + (col + 1))
+            }else{
+            //adiciona a posição ao array para um novo navio vertical
+            newShipLocations.push((row + 1 ) + "" + col)
+            }
+        }
+        return newShipLocations
+    },
     //Método que dispara no navio
     fire: function(guess){
         for( var i =0; i <this.numShips; i++){ //Passa por cada método do navio
@@ -78,7 +111,6 @@ var model = {
         return true
     }
 }
-
 
 //Objeto Controller 
 //Este objeto é responsável por pegar o palpite, processar o palpite e entregar para o model. 
