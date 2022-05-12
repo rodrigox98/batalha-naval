@@ -35,13 +35,13 @@ var model = {
 
     ships: [ //Esse é a propriedade ships , que é um array de objetos que contém a localização dos navios. É usado um array para otimizar a simplicidade do código, em vez de criar 3 propriedades diferentes.
     {
-        locations: ["06", "16", "26"], // i = 0
+        locations: ["0", "0", "0"], // i = 0
         hits: ["", "", ""] }, //Navio 1
     {
-        locations: ["24", "34", "44"], // i = 1
+        locations: ["0", "0", "0"], // i = 1
         hits: ["", "", ""] }, //Navio 2 
     {
-        locations: ["10", "11", "12"], // i = 2
+        locations: ["0", "0", "0"], // i = 2
         hits: ["", "", ""] } //Navio 3 
     ], 
     generateShipLocations: function(){
@@ -54,7 +54,7 @@ var model = {
         }
     },
     generateShip: function(){
-        var direction = Math.floo(Math.random() * 2) //assim se cria um seguimento binário
+        var direction = Math.floor(Math.random() * 2) //assim se cria um seguimento binário
         var row, col
         if(direction === 1){
             //Gere a posição inicial para um navio horizontal
@@ -65,15 +65,14 @@ var model = {
             row = Math.floor(Math.random() * (this.boardSize - this.shipLength))
             col = Math.floor(Math.random() * this.boardSize)
         }
-
         var newShipLocations = []     //Para as posições, um array vazio, e adicionar as posições uma por uma
         for(var i= 0; i< this.shipLength; i++){
             if(direction === 1){
-            //adiciona a posição ao array para umm novo navio horizontal
-            newShipLocations.push(row + "" + (col + 1))
+            //adiciona a posição ao array para um novo navio horizontal
+            newShipLocations.push(row + "" + (col + i))
             }else{
             //adiciona a posição ao array para um novo navio vertical
-            newShipLocations.push((row + 1 ) + "" + col)
+            newShipLocations.push((row + i ) + "" + col)
             }
         }
         return newShipLocations
@@ -173,6 +172,8 @@ function init(){
     //para o botão enter
     var guessInput = document.getElementById("guessInput")
     guessInput.onkeydown = handleKeyPress
+
+    model.generateShipLocations() //chamando o generateShipLocation logo que se incia o jogo.
 }
 //função que ativa o enter
 function handleKeyPress(e){
