@@ -78,6 +78,18 @@ var model = {
         }
         return newShipLocations
     },
+    //Verifica se a posição de algum navio sobrepõem a de outro.
+    collision: function(locations){ //recebe o array da posição do navio
+        for(var i = 0; i <this.numShips; + i++){ // verifica para cada navio
+            var ship = model.ships[i]
+            for(var j = 0; j < locations.length; j++){ // verifica se há colisão com o array de outro navio. 
+                if(ship.locations.indexOf(locations[j]) >= 0){
+                    return true
+                }
+            }
+        }
+        return false
+    },
     //Método que dispara no navio
     fire: function(guess){
         for( var i =0; i <this.numShips; i++){ //Passa por cada método do navio
